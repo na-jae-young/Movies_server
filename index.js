@@ -15,6 +15,18 @@ const movierate_ctrl = require('./src/routes/control/movierate.ctrl')
 const movieinfo_ctrl = require('./src/routes/control/movieinfo.ctrl')
 const movieinfo_genre_ctrl = require('./src/routes/control/moviegenre.ctrl')
 
+require("dotenv/config");
+const PORT = process.env.PORT || 3001;
+const config = require("./config/key");
+
+
+//react 의 build 폴더 복사해서 server 로 갖어온 다음에 아래 코드로 view연결 
+
+app.use(express.static(__dirname, "/build")); //폴더안의 것들을 꺼내어 써도 좋다 라는 것 
+
+app.get("/", (req, res) => {
+  res.sendFile(__dirname, "/build", "index.html");   // __dirname = root 
+});
 
 
 //app.use('/',router)
@@ -59,6 +71,6 @@ app.get('/api/movieinfo/years', movieinfo_ctrl.process.read_years)
 //genre
 app.get('/api/movieinfo/genres', movieinfo_genre_ctrl.process.read)
 
-app.listen(3001 , ()=> {console.log("3001 server" )})
+app.listen(PORT , ()=> {console.log("3001 server" )})
 
 //같은것 선택 컨트롤 + D , 알트 + 마우스 클릭 
