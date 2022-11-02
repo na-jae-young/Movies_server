@@ -23,6 +23,8 @@ const movieinfo_genre_ctrl = require('./src/routes/control/moviegenre.ctrl')
  app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/index.html"));   // __dirname = root 
 });
+app.get("/test1", (req, res) => {res.send("hello world");});
+app.get("/test",movieinfo_genre_ctrl.process.read)
 
 
 
