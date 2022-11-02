@@ -17,7 +17,7 @@ const movieinfo_ctrl = require('./src/routes/control/movieinfo.ctrl')
 const movieinfo_genre_ctrl = require('./src/routes/control/moviegenre.ctrl')
 
 // require("dotenv/config");
- const PORT = process.env.PORT || 3001;
+ const PORT = process.env.PORT || 3002;
 //react 의 build 폴더 복사해서 server 로 갖어온 다음에 아래 코드로 view연결 
  app.use(express.static(path.join(__dirname, "./build"))); //폴더안의 것들을 꺼내어 써도 좋다 라는 것 
  app.get("/", (req, res) => {
