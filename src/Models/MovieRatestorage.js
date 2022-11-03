@@ -7,7 +7,7 @@ class MovieRatestorage{
 
     static async GetRate(column,where){
         return new Promise(async(resolve,reject) => {
-            const sqlselect = `select ${column} from movie_rate ${where}` 
+            const sqlselect = `select ${column} from heroku_b4f2e40008aca92.movie_rate ${where}` 
             await db.query(sqlselect, (err, result) => {  
                 if(err) {reject(`${err}`) }
                 else{
@@ -23,7 +23,7 @@ class MovieRatestorage{
         const rate = body.rate
 
         return new Promise( async (resolve, reject) => {
-            const sql = "INSERT INTO movie_rate(userID,movieID,rate) values (?,?,?);"
+            const sql = "INSERT INTO heroku_b4f2e40008aca92.movie_rate(userID,movieID,rate) values (?,?,?);"
             await db.query(sql,[userID,movieID,rate],(err,result) =>{
                 if(err) {reject(`${err}`) }
                 else{
@@ -39,7 +39,7 @@ class MovieRatestorage{
         const rate = body.rate
 
         return new Promise( async (resolve, reject) => {
-            const sql = "update movie_rate set rate = ? where userID = ? and movieID = ?"
+            const sql = "update heroku_b4f2e40008aca92.movie_rate set rate = ? where userID = ? and movieID = ?"
             await db.query(sql,[rate,userID,movieID],(err, result)=>{
                 if(err){reject(`${err}`)}
                 else{
@@ -52,7 +52,7 @@ class MovieRatestorage{
     static async delete(body){
         const userID = body.userID
         const movieID = body.movieID
-        const sqlDelete = `delete from movie_rate where userID = ? AND movieID = ? `
+        const sqlDelete = `delete from heroku_b4f2e40008aca92.movie_rate where userID = ? AND movieID = ? `
 
         return new Promise((resolve, reject) => {
                 db.query(sqlDelete,[userID,movieID], (err, result)  => {
@@ -65,7 +65,7 @@ class MovieRatestorage{
 
     static async confirm(column,where){
         return new Promise(async(resolve,reject) => {
-            const sqlselect = `select ${column} from movie_rate ${where}` 
+            const sqlselect = `select ${column} from heroku_b4f2e40008aca92.movie_rate ${where}` 
             await db.query(sqlselect, (err, result) => {  
                 if(err) {
                     console.log(err)

@@ -9,7 +9,7 @@ class MovieGenrestorage{
     static async read(column,where,value){
 
         return new Promise(async(resolve,reject) => {
-            const sqlselect = `select ${column} from movie_genre ${where}` 
+            const sqlselect = `select ${column} from heroku_b4f2e40008aca92.movie_genre ${where}` 
             await db.query(sqlselect,value, (err, result) => {  
                 if(err) {
                     console.log(err)
@@ -24,7 +24,7 @@ class MovieGenrestorage{
     static async create(table,column,values){
 
         return new Promise( async (resolve, reject) => {
-            const sql = `INSERT INTO ${table}${column}`
+            const sql = `INSERT INTO heroku_b4f2e40008aca92.${table}${column}`
             await db.query(sql,values,(err,result) =>{
                 if(err) {
                     console.log(err)
@@ -39,7 +39,7 @@ class MovieGenrestorage{
     static async update(set,where,value){
 
         return new Promise( async (resolve, reject) => {
-            const sql = `update movie_info set ${set} where ${where}`
+            const sql = `update heroku_b4f2e40008aca92.movie_info set ${set} where ${where}`
             await db.query(sql,value,(err, result)=>{
                 if(err){
                     console.log(err)

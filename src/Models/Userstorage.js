@@ -20,7 +20,7 @@ class UserStorage{
     }
     static async getUserInfo(id){
         return new Promise((resolve,reject)=>{
-                    const sql = "select id,psword from users where id = ? ;";
+                    const sql = "select id,psword from heroku_b4f2e40008aca92.users where id = ? ;";
                     db.query(sql,[id],(err,data)=>{
                         if(err) reject(`${err}`);
                         else if(data.length === 0) resolve({id:""});
@@ -38,7 +38,7 @@ class UserStorage{
             })
         }
         return new Promise((resolve,reject)=>{
-            const sql = "insert into users(id, name, psword) values(?,?,?);";
+            const sql = "insert into heroku_b4f2e40008aca92.users(id, name, psword) values(?,?,?);";
             db.query(sql,[userInfo.id,userInfo.name,userInfo.psword],(err)=>{
                 if(err) reject(`${err}`);
                 else resolve({success:true, message:'save success'});
