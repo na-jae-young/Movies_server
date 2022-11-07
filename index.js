@@ -71,6 +71,10 @@ app.get('/api/movieinfo/years', movieinfo_ctrl.process.read_years)
 //genre
 app.get('/api/movieinfo/genres', movieinfo_genre_ctrl.process.read)
 
+//mainhome(best,recommend)
+app.get('/api/get/movies/best', movieinfo_ctrl.process.read_best)
+
+
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, './build/index.html'));
 });
