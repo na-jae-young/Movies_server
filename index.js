@@ -21,7 +21,7 @@ const movieinfo_genre_ctrl = require('./src/routes/control/moviegenre.ctrl')
 //react 의 build 폴더 복사해서 server 로 갖어온 다음에 아래 코드로 view연결 
  app.use(express.static(path.join(__dirname, "./build"))); //폴더안의 것들을 꺼내어 써도 좋다 라는 것 
  app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "./build/index.html"));   // __dirname = root 
+  res.sendFile(path.join(__dirname, "./build/index.html"));   // __dirname = root    , / 로 접속하면 build의 index를 출력해주어라 
 });
 app.get("/test1", (req, res) => {res.send("hello world");});
 app.get("/test",movieinfo_genre_ctrl.process.read)
@@ -76,7 +76,7 @@ app.get('/api/get/movies/best', movieinfo_ctrl.process.read_best)
 
 
 app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, './build/index.html'));
+  res.sendFile(path.join(__dirname, './build/index.html'));   //위에 있는 주소들이외에 url로 접속한다면 build의 index를 내보내어라 
 });
 
 
