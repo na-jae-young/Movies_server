@@ -27,7 +27,7 @@ class MovieInfo {
         const db = "heroku_b4f2e40008aca92"
         try{
             const column = "A.movieID , A.image, A.title, A.summary, A.year, A.visitcount, RATE.count"
-            const where = `INNER join (SELECT movieID, count(movieID) as count FROM ${db}.movie_rate where rate = 'like' group by movieID order by count desc  limit 10) RATE on movie_info.movieID = RATE.movieID;`
+            const where = `INNER join (SELECT movieID, count(movieID) as count FROM ${db}.movie_rate where rate = 'like' group by movieID order by count desc  limit 10) RATE on A.movieID = RATE.movieID;`
             const value = []
 
             const response = await MovieInfostorage.read(column,where,value)
@@ -148,7 +148,7 @@ class MovieInfo {
             const response = await movieGenre.read_user_genre() //장르 2개 반환
 
             if(response.data[0]?.genre){
-                const res = await MovieInfostorage.user_genre_movies(body.userID ,response.data[0]?.genre,db )
+                const res = await MovieInfostorage.user_genre_movies(body.userID ,response.data[0]?.genre, db )
                 return {success: true,message:"user's genre movie read success", data:res.data}
             }
             return {success: false ,message:"user's genre movie read false", err:err}
