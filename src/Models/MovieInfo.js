@@ -24,7 +24,7 @@ class MovieInfo {
 
     async read_best(){
         const body = this.body
-        const db = config.database //"heroku_b4f2e40008aca92"
+        const db = "heroku_b4f2e40008aca92"
         try{
             const column = "A.movieID , A.image, A.title, A.summary, A.year, A.visitcount, RATE.count"
             const where = `INNER join (SELECT movieID, count(movieID) as count FROM ${db}.movie_rate where rate = 'like' group by movieID order by count desc  limit 10) RATE on movie_info.movieID = RATE.movieID;`
@@ -82,7 +82,7 @@ class MovieInfo {
 
     async read_user_like_language(){
         const body = this.body
-        const db = config.database //"heroku_b4f2e40008aca92"
+        const db = "heroku_b4f2e40008aca92"
         try{
             const column = "A.language ,count(A.language) as count"
             const where = `INNER JOIN (SELECT movieID FROM ${db}.movie_rate where userID= ? and rate = 'like' order by date desc limit 10) Rate 
@@ -98,7 +98,7 @@ class MovieInfo {
 
     async read_user_like_year(){
         const body = this.body
-        const db = config.database //"heroku_b4f2e40008aca92"
+        const db = "heroku_b4f2e40008aca92"
         try{
             const column = "A.year , count(A.year) as count "
             const where = `INNER JOIN (SELECT movieID FROM ${db}.movie_rate where userID= '123' and rate = 'like' order by date desc limit 10) Rate 
@@ -114,7 +114,7 @@ class MovieInfo {
 
     async read_movies_user_language(){ //유저가 좋아하는 언어권의 영화 목록 추천 
         const body = this.body
-        const db = config.database //"heroku_b4f2e40008aca92"
+        const db = "heroku_b4f2e40008aca92"
         try{
             // user 가 좋아하는 언어 목록 
             const movieInfo = new MovieInfo(body)
@@ -142,7 +142,7 @@ class MovieInfo {
 
     async read_movies_user_first_genre(){
         const body = this.body
-        const db = config.database //"heroku_b4f2e40008aca92"
+        const db = "heroku_b4f2e40008aca92"
         try{
             const movieGenre = new MovieGenre(body)
             const response = await movieGenre.read_user_genre() //장르 2개 반환
@@ -160,7 +160,7 @@ class MovieInfo {
 
     async read_movies_user_second_genre(){
         const body = this.body
-        const db = config.database //"heroku_b4f2e40008aca92"
+        const db = "heroku_b4f2e40008aca92"
         try{
             const movieGenre = new MovieGenre(body)
             const response = await movieGenre.read_user_genre() //장르 2개 반환
@@ -178,7 +178,7 @@ class MovieInfo {
 
     async read_movies_user_genre(){
         const body = this.body
-        const db = config.database //"heroku_b4f2e40008aca92"
+        const db = "heroku_b4f2e40008aca92"
         try{
             const movieGenre = new MovieGenre(body)
             const response = await movieGenre.read_user_genre() //장르 2개 반환
