@@ -1,5 +1,6 @@
 const MovieInfostorage = require("./MovieInfostorage")
 
+
 class MovieInfo {
     constructor(body){
         this.body = body;
@@ -74,6 +75,124 @@ class MovieInfo {
             return {success:false, message: 'create error', err:err}
         }
     }
+
+
+    // user 정보 활용 추천 영화 추출
+
+    async read_user_like_language(){
+        const body = this.body
+        const db = "heroku_b4f2e40008aca92"
+        try{
+            const column = "A.language ,count(A.language) as count"
+            const where = `INNER JOIN (SELECT movieID FROM ${db}.movie_rate where userID= ? and rate = 'like' order by date desc limit 10) Rate 
+            ON A.movieID = Rate.movieID group by A.language order by count desc`
+            const value = [body.userID]
+
+            const response = await MovieInfostorage.read(column,where,value)
+            return {success: true,message:"language read success", data:response.data}
+        }catch(err){
+            console.log('read_user_like_language error')
+        }
+    }
+
+    async read_user_like_year(){
+        const body = this.body
+        const db = "heroku_b4f2e40008aca92"
+        try{
+            const column = "A.year , count(A.year) as count "
+            const where = `INNER JOIN (SELECT movieID FROM ${db}.movie_rate where userID= '123' and rate = 'like' order by date desc limit 10) Rate 
+            ON A.movieID = Rate.movieID group by A.year order by count desc`
+            const value = [body.userID]
+            const response = await MovieInfostorage.read(column,where,value)
+            return {success: true,message:"language read success", data:response.data}
+        }catch(err){
+            console.log('read_user_like_year error')
+
+        }
+    }
+
+    async read_movies_user_language(){ //유저가 좋아하는 언어권의 영화 목록 추천 
+        const body = this.body
+        const db = "heroku_b4f2e40008aca92"
+        try{
+            // user 가 좋아하는 언어 목록 
+            const movieInfo = new MovieInfo(body)
+            const response = await movieInfo.read_user_like_language()
+            // user 가 좋아하는 언어 목록 
+            // const column = "A.language ,count(A.language) as count"
+            // const where = "INNER JOIN (SELECT movieID FROM crud.movie_rate where userID= ? and rate = 'like' order by date desc limit 10) Rate ON A.movieID = Rate.movieID group by A.language order by count desc"
+            // const value = [body.userID]
+            // const response = await MovieInfostorage.read(column,where,value)
+
+            if(response.data[0]?.language){
+                const column = "A.movieID , A.image, A.title, A.year, A.summary, A.visitcount"
+                const where = `left join (select * from ${db}.movie_rate where userID = ?  ) Rate 
+                on (Rate.movieID = A.movieID)  where Rate.movieID is null and language = ? order by A.rate desc limit 10`
+                const value = [body.userID,response.data[0]?.language ]
+                const res = await MovieInfostorage.read(column,where, value)
+                return {success: true,message:"user's language movies read success", data:res.data}
+            }
+            return {success: false ,message:"user's language movies read false", err:err}
+        }catch(err){
+            console.log('read_movies_best_language error')
+
+        }
+    }
+
+    async read_movies_user_first_genre(){
+        const body = this.body
+        const db = "heroku_b4f2e40008aca92"
+        try{
+            const movieGenre = new MovieGenre(body)
+            const response = await movieGenre.read_user_genre() //장르 2개 반환
+
+            if(response.data[0]?.genre){
+                const res = await MovieInfostorage.user_genre_movies(body.userID ,response.data[0]?.genre,db )
+                return {success: true,message:"user's genre movie read success", data:res.data}
+            }
+            return {success: false ,message:"user's genre movie read false", err:err}
+        }catch(err){
+            console.log('user genre movies read error')
+
+        }
+    }
+
+    async read_movies_user_second_genre(){
+        const body = this.body
+        const db = "heroku_b4f2e40008aca92"
+        try{
+            const movieGenre = new MovieGenre(body)
+            const response = await movieGenre.read_user_genre() //장르 2개 반환
+
+            if(response.data[1]?.genre){
+                const res= await MovieInfostorage.user_genre_movies(body.userID ,response.data[1]?.genre ,db)
+                return {success: true,message:"user's genre movie read success", data:res.data}
+            }
+            return {success: false ,message:"user's genre movie read false", err:err}
+        }catch(err){
+            console.log('user genre movies read error')
+
+        }
+    }
+
+    async read_movies_user_genre(){
+        const body = this.body
+        const db = "heroku_b4f2e40008aca92"
+        try{
+            const movieGenre = new MovieGenre(body)
+            const response = await movieGenre.read_user_genre() //장르 2개 반환
+
+            if(response.data[1]?.genre){
+                const res= await MovieInfostorage.user_two_genre_movies(body.userID ,response.data,db)
+                return {success: true,message:"user's two genre movie read success", data:res.data}
+            }
+            return {success: false ,message:"user's two genre movie read false", err:err}
+        }catch(err){
+            console.log('user two genre movies read error')
+            console.log(err)
+        }
+    }
+
 
 
 

@@ -69,6 +69,20 @@ class MovieRate {
 
     }
 
+    async read_user_like(){ // 유저가 좋아한 최근 영화id 반환 
+        const body = this.body
+        const column = "movieID"
+        const where = "where userID= ? and rate = 'like' order by date desc"
+        const value = [body.userID]
+        try{
+            const response = await MovieRatestorage.read(column, where, value)
+            return {success: true , message:'success' , data:response.data}
+        }catch(err){
+            console.log(err)
+            return {success: false, message: 'user like list error',err:err}
+        }
+    }
+
 }
 
 module.exports = MovieRate
