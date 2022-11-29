@@ -24,9 +24,10 @@ class MovieInfo {
 
     async read_best(){
         const body = this.body
+        const db = config.database //"heroku_b4f2e40008aca92"
         try{
-            const column = "movie_info.movieID , movie_info.image, movie_info.title,movie_info.summary, movie_info.year, movie_info.visitcount, RATE.count"
-            const where = "INNER join (SELECT movieID, count(movieID) as count FROM movie_rate where rate = 'like' group by movieID order by count desc  limit 10) RATE on movie_info.movieID = RATE.movieID;"
+            const column = "A.movieID , A.image, A.title, A.summary, A.year, A.visitcount, RATE.count"
+            const where = `INNER join (SELECT movieID, count(movieID) as count FROM ${db}.movie_rate where rate = 'like' group by movieID order by count desc  limit 10) RATE on movie_info.movieID = RATE.movieID;`
             const value = []
 
             const response = await MovieInfostorage.read(column,where,value)
