@@ -148,7 +148,7 @@ class MovieInfo {
             const movieGenre = new MovieGenre(body)
             const response = await movieGenre.read_user_genre() //장르 2개 반환
 
-            if(response.data[0]){
+            if(response.data[0]?.genre){
                 const res = await MovieInfostorage.user_genre_movies(body.userID ,response.data[0]?.genre )
                 return {success: true,message:"user's genre movie read success", data:res.data}
             }
@@ -166,7 +166,7 @@ class MovieInfo {
             const movieGenre = new MovieGenre(body)
             const response = await movieGenre.read_user_genre() //장르 2개 반환
 
-            if(response.data[1]){
+            if(response.data[1]?.genre){
                 const res= await MovieInfostorage.user_genre_movies(body.userID ,response.data[1]?.genre)
                 return {success: true,message:"user's genre movie read success", data:res.data}
             }
@@ -184,7 +184,7 @@ class MovieInfo {
             const movieGenre = new MovieGenre(body)
             const response = await movieGenre.read_user_genre() //장르 2개 반환
 
-            if(response.data[1]){
+            if(response.data[1]?.genre){
                 const res= await MovieInfostorage.user_two_genre_movies(body.userID ,response.data)
                 return {success: true,message:"user's two genre movie read success", data:res.data}
             }
