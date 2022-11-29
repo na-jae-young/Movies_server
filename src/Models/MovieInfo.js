@@ -148,7 +148,7 @@ class MovieInfo {
             const response = await movieGenre.read_user_genre() //장르 2개 반환
 
             if(response.data[0]){
-                const res = await MovieInfostorage.user_genre_movies(body.userID ,response.data[0]?.genre, db )
+                const res = await MovieInfostorage.user_genre_movies(body.userID ,response.data[0]?.genre )
                 return {success: true,message:"user's genre movie read success", data:res.data}
             }
             return {success: false ,message:"user's genre movie read false", err:err}
@@ -160,13 +160,13 @@ class MovieInfo {
 
     async read_movies_user_second_genre(){
         const body = this.body
-        const db = "heroku_b4f2e40008aca92"
+        
         try{
             const movieGenre = new MovieGenre(body)
             const response = await movieGenre.read_user_genre() //장르 2개 반환
 
             if(response.data[1]){
-                const res= await MovieInfostorage.user_genre_movies(body.userID ,response.data[1]?.genre ,db)
+                const res= await MovieInfostorage.user_genre_movies(body.userID ,response.data[1]?.genre)
                 return {success: true,message:"user's genre movie read success", data:res.data}
             }
             return {success: false ,message:"user's genre movie read false", err:err}
@@ -184,7 +184,7 @@ class MovieInfo {
             const response = await movieGenre.read_user_genre() //장르 2개 반환
 
             if(response.data[1]){
-                const res= await MovieInfostorage.user_two_genre_movies(body.userID ,response.data,db)
+                const res= await MovieInfostorage.user_two_genre_movies(body.userID ,response.data)
                 return {success: true,message:"user's two genre movie read success", data:res.data}
             }
             return {success: false ,message:"user's two genre movie read false", err:err}
