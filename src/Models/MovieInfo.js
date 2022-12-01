@@ -1,5 +1,5 @@
 const MovieInfostorage = require("./MovieInfostorage")
-const MovieGenre = require("./MovieGenre")
+//const MovieGenre = require("./MovieGenre")
 const config = require("../config/config")
 
 class MovieInfo {
